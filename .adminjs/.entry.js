@@ -11,3 +11,5 @@ import Component4 from '../node_modules/@adminjs/upload/src/features/upload-file
 AdminJS.UserComponents.Component4 = Component4
 import Component5 from '../node_modules/@adminjs/upload/src/features/upload-file/components/show'
 AdminJS.UserComponents.Component5 = Component5
+import Component6 from '../src/adminjs/components/Dashboard'
+AdminJS.UserComponents.Component6 = Component6
