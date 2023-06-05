@@ -8,6 +8,7 @@ router.get('/categories', categoriesController.index)
 router.get('/categories/:id', categoriesController.show)
 
 router.get('/courses/featured', courseController.featured)
+router.get('/courses/newest', courseController.newest)
 router.get('/courses/:id', courseController.show)
 
 
