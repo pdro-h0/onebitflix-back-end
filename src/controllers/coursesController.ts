@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { courseService } from "../services/courseService";
 import { getPaginationParams } from "../helpers/getPaginationParams";
 
-export const courseController = {
+export const coursesController = {
   //GET /course/featured
   featured: async (req: Request, res: Response) => {
     try {
