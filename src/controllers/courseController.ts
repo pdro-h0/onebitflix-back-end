@@ -1,48 +1,64 @@
 import { Request, Response } from "express";
 import { courseService } from "../services/courseService";
-import { Course } from "../models";
+import { getPaginationParams } from "../helpers/getPaginationParams";
 
 export const courseController = {
-    //GET /course/featured
-    featured: async (req: Request, res: Response)=>{
-        try {
-          const featuredCourses = await courseService.getRandomFeaturedCourses()
-          
-          return res.json(featuredCourses)
-        } catch (error) {
-            if (error instanceof Error) {
-                return res.status(400).json({ message: error.message });
-              }
-        }
-    },
+  //GET /course/featured
+  featured: async (req: Request, res: Response) => {
+    try {
+      const featuredCourses = await courseService.getRandomFeaturedCourses();
 
-      //GET /course/newest
-      newest: async(req: Request, res:Response)=>{
-        try {
-            const newestCourses  = await courseService.getTopTenNewest()
+      return res.json(featuredCourses);
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ message: error.message });
+      }
+    }
+  },
 
-            return res.json(newestCourses)
+  //GET /course/newest
+  newest: async (req: Request, res: Response) => {
+    try {
+      const newestCourses = await courseService.getTopTenNewest();
 
-          } catch (error) {
-              if (error instanceof Error) {
-                  return res.status(400).json({ message: error.message });
-                }
-          }
-      },
+      return res.json(newestCourses);
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ message: error.message });
+      }
+    }
+  },
 
-    //GET /course/:id
-    show: async (req: Request, res: Response)=>{
-        const { id } = req.params
+  //GET /course/search
+  search: async (req: Request, res: Response) => {
+    const { name } = req.query;
+    const [page, perPage] = getPaginationParams(req.query);
 
-        try {
-            const course = await courseService.findByIdWithEpisodes(id)
+    try {
+      if (typeof name !== "string")
+        throw new Error('o parametro "name" precisa ser do tipo "string"');
 
-            return res.json(course)
-        } catch (error) {
-            if (error instanceof Error) {
-                return res.status(400).json({ message: error.message });
-              }
-        }
-    },
+      const courses = await courseService.findByName(name, page, perPage);
+      return res.json(courses);
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ message: error.message });
+      }
+    }
+  },
 
-}
+  //GET /course/:id
+  show: async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+      const course = await courseService.findByIdWithEpisodes(id);
+
+      return res.json(course);
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ message: error.message });
+      }
+    }
+  },
+};
