@@ -1,3 +1,4 @@
+import { where } from "sequelize/dist";
 import { Favorite } from "../models/Favorite";
 
 export const favoriteService = {
@@ -18,9 +19,9 @@ export const favoriteService = {
 
     return {
       userId,
-      courses: favorites.map((favorite) =>{
-        return favorite.Course
-      })
+      courses: favorites.map((favorite) => {
+        return favorite.Course;
+      }),
     };
   },
 
@@ -31,5 +32,14 @@ export const favoriteService = {
     });
 
     return favorite;
+  },
+
+  delete: async (userId: number, courseId: number) => {
+    await Favorite.destroy({
+      where: {
+        userId: userId,
+        courseId: courseId,
+      },
+    });
   },
 };
