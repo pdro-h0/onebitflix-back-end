@@ -32,6 +32,18 @@ export const coursesController = {
     }
   },
 
+  // GET /courses/popular
+  popular: async (req: Request, res: Response) => {
+    try {
+      const topTen = await courseService.getTopTenByLikes();
+      return res.json(topTen);
+    } catch (error) {
+      if (error instanceof Error) {
+        return res.status(400).json({ message: error.message });
+      }
+    }
+  },
+
   //GET /course/search
   search: async (req: Request, res: Response) => {
     const { name } = req.query;
@@ -62,7 +74,10 @@ export const coursesController = {
         return res.status(404).json({ message: "Curso não encontrado" });
 
       const liked = await likeService.isLiked(userId, Number(courseId));
-      const favorited = await favoriteService.isFavorited(userId, Number(courseId));
+      const favorited = await favoriteService.isFavorited(
+        userId,
+        Number(courseId)
+      );
 
       return res.json({ ...course.get(), favorited, liked });
     } catch (error) {
