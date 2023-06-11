@@ -106,4 +106,16 @@ export const userService = {
     );
     return keepWatchingList;
   },
+
+  updatePassword: async (id: string | number, password: string) => {
+    const [affectedRows, updatedUsers] = await User.update({
+      password
+    }, {
+      where: { id },
+      returning: true,
+      individualHooks: true,
+    })
+
+    return updatedUsers[0]
+  },
 };
