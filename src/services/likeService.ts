@@ -17,5 +17,14 @@ export const likeService = {
       }
     })
     return like !== null ? true : false
+  },
+
+  delete: async (userId: number, courseId: number)=>{
+    await Like.destroy({
+      where:{
+        userId: userId,
+        courseId: courseId
+      }
+    })
   }
 }
