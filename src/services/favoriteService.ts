@@ -1,4 +1,3 @@
-import { where } from "sequelize/dist";
 import { Favorite } from "../models/Favorite";
 
 export const favoriteService = {

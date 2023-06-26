@@ -19,7 +19,7 @@ export const Favorite = sequelize.define<FavoriteInstance, Favorite>('Favorite',
     primaryKey: true,
     type: DataTypes.INTEGER,
     references: {
-      model: 'User',
+      model: 'users',
       key: 'id'
     },
     onUpdate: 'CASCADE',
@@ -30,7 +30,7 @@ export const Favorite = sequelize.define<FavoriteInstance, Favorite>('Favorite',
     primaryKey: true,
     type: DataTypes.INTEGER,
     references: {
-      model: 'Course',
+      model: 'courses',
       key: 'id'
     },
     onUpdate: 'CASCADE',
